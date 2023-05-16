@@ -7,8 +7,8 @@
 
 
 // ***** GLOBALS ******
-let votingRounds = 20;
-let goatArray = [];
+let votingRounds = 25;
+let duckArray = [];
 
 
 
@@ -23,7 +23,7 @@ let resultBtn = document.getElementById('show-results-btn');
 let resultsList = document.getElementById('results-container');
 
 // **** CONSTRUCTOR FUNCTION ****
-function Goat(name, imageExtension = 'jpg'){
+function Duck(name, imageExtension = 'jpg'){
   this.name = name;
   this.image = `img/${name}.${imageExtension}`;
   this.votes = 0;
@@ -33,7 +33,7 @@ function Goat(name, imageExtension = 'jpg'){
 // **** HELPER FUNCTIONS / UTILITIES ****
 
 function randomIndexGenerator(){
-  return Math.floor(Math.random() * goatArray.length);
+  return Math.floor(Math.random() * duckArray.length);
 }
 
 function renderImgs(){
@@ -50,19 +50,19 @@ function renderImgs(){
     imageThreeIndex = randomIndexGenerator();
   }
 
-  imgOne.src = goatArray[imageOneIndex].image;
-  imgOne.title = goatArray[imageOneIndex].name;
+  imgOne.src = duckArray[imageOneIndex].image;
+  imgOne.title = duckArray[imageOneIndex].name;
 
-  imgTwo.src = goatArray[imageTwoIndex].image;
-  imgTwo.title = goatArray[imageTwoIndex].name;
+  imgTwo.src = duckArray[imageTwoIndex].image;
+  imgTwo.title = duckArray[imageTwoIndex].name;
 
-  imgThree.src = goatArray[imageThreeIndex].image;
-  imgThree.title = goatArray[imageThreeIndex].name;
+  imgThree.src = duckArray[imageThreeIndex].image;
+  imgThree.title = duckArray[imageThreeIndex].name;
 
   // DONE: Increase the goats views
-  goatArray[imageOneIndex].views++;
-  goatArray[imageTwoIndex].views++;
-  goatArray[imageThreeIndex].views++;
+  duckArray[imageOneIndex].views++;
+  duckArray[imageTwoIndex].views++;
+  duckArray[imageThreeIndex].views++;
 }
 
 // **** EVENT HANDLERS ****
@@ -74,9 +74,9 @@ function handleImgClick(event){
   // console.log(imageClicked);
 
   // TODO: Increase the vote on that image
-  for(let i = 0; i < goatArray.length; i++){
-    if(imageClicked === goatArray[i].name){
-      goatArray[i].votes++;
+  for(let i = 0; i < duckArray.length; i++){
+    if(imageClicked === duckArray[i].name){
+      duckArray[i].votes++;
       // TODO: decrement the voting round
       votingRounds--;
       // TODO: generate new images
@@ -93,29 +93,39 @@ function handleImgClick(event){
 
 function handleShowResults(){
   if(votingRounds === 0){
-    for(let i = 0; i < goatArray.length; i++){
-      let goatListItem = document.createElement('li');
+    for(let i = 0; i < duckArray.length; i++){
+      let duckListItem = document.createElement('li');
 
-      goatListItem.textContent = `${goatArray[i].name} - Votes: ${goatArray[i].votes} & Views: ${goatArray[i].views}`;
+      duckListItem.textContent = `${duckArray[i].name} - Votes: ${duckArray[i].votes} & Views: ${duckArray[i].views}`;
 
-      resultsList.appendChild(goatListItem);
+      resultsList.appendChild(duckListItem);
     }
     resultBtn.removeEventListener('click', handleShowResults);
   }
 }
 
 // **** EXECUTABLE CODE *****
-let bunnyGoat = new Goat('sweep', 'png');
-let coolGoat = new Goat('bag');
-let cruisinGoat = new Goat('banana');
-let floatYourGoat = new Goat('bathroom');
-let goatOutOfHand = new Goat('boots');
-let kissingGoat = new Goat('breakfast');
-let sassyGoat = new Goat('bubblegum');
-let smilingGoat = new Goat('chair');
-let sweaterGoat = new Goat('cthulhu');
+let sweep = new Duck('sweep', 'png');
+let bag = new Duck('bag');
+let banana = new Duck('banana');
+let bathroom = new Duck('bathroom');
+let boots = new Duck('boots');
+let breakfast = new Duck('breakfast');
+let bubblegum = new Duck('bubblegum');
+let chair = new Duck('chair');
+let cthulhu = new Duck('cthulhu');
+let dogDuck = new Duck('dog-duck');
+let dragon = new Duck('dragon');
+let pen = new Duck('pen');
+let petSweep = new Duck('pet-sweep');
+let scissors = new Duck('scissors');
+let shark = new Duck('shark');
+let tauntaun = new Duck('tauntaun');
+let unicorn = new Duck('unicorn');
+let waterCan = new Duck('water-can');
+let wineGlass= new Duck('wine-glass');
 
-goatArray.push(bunnyGoat, coolGoat, cruisinGoat, floatYourGoat, goatOutOfHand, kissingGoat, sassyGoat, smilingGoat, sweaterGoat);
+duckArray.push(sweep, bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, tauntaun, unicorn, waterCan, wineGlass);
 
 
 renderImgs();

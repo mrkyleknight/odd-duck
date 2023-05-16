@@ -2,9 +2,15 @@
 <html lang="en">
 
 <head>
-
+  <style>
+    .logo-img {
+      width: 75px;
+      ; /* Initial width in CSS */
+      height: auto; /* Auto height to maintain aspect ratio */
+    }
+  </style>
   
-  <title>Goat Vote</title>
+  <title>Company Vote</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,22 +21,31 @@
 </head>
 
 <body>
-  <h1>Odd Duck Products</h1>
+  <h1><img src="img/The_DuckDuckGo_Duck.png" alt="Logo" class="logo-img">Odd Duck Products </h1>
   
   <div id="container">
     
     <div id="voting-rounds">Round(s) Remaining: <span id="rounds-count"></span></div>
+    <p style="text-align: center;"></pstyle>Vote for 1 of the 3 products displayed</p>
+    <br>
+    <br>
     <div id="content-wrapper">
       <div id="results-container">
+        
         <h2>Results</h2>
+        <br>
+        <h3>Available after 20 rounds </h3>
         <ul id="results-list"></ul>
       </div>
       <div id="img-container">
         <img id="img-one" alt="Image 1">
         <img id="img-two" alt="Image 2">
         <img id="img-three" alt="Image 3">
+        
       </div>
+
     </div>
+    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecati, a repudiandae. Consequatur, nulla expedita aliquid deleniti, vel quidem enim quibusdam sed id illo dicta in. Mollitia neque a non reiciendis. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ducimus distinctio, blanditiis impedit omnis minima maxime dolorum ad suscipit quidem mollitia provident quam, dolor quae fugiat beatae tenetur voluptate. Molestiae, itaque.</p>
     <button id="show-results-btn">Show Results</button>
   </div>
   <script src="js/app2.js"></script>
