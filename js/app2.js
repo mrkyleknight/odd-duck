@@ -1,18 +1,9 @@
 'use strict';
 
-
-
-
-
-
-
 // ***** GLOBALS ******
 let votingRounds = 25;
 let duckArray = [];
-
-
-
-
+const voteData = [];
 
 // ***** DOM WINDOWS ****
 let imgContainer = document.getElementById('img-container');
@@ -21,6 +12,7 @@ let imgTwo = document.getElementById('img-two');
 let imgThree = document.getElementById('img-three');
 let resultBtn = document.getElementById('show-results-btn');
 let resultsList = document.getElementById('results-container');
+let chartContainer = document.getElementById('chart-container');
 
 // **** CONSTRUCTOR FUNCTION ****
 function Duck(name, imageExtension = 'jpg'){
@@ -37,14 +29,11 @@ function randomIndexGenerator(){
 }
 
 function renderImgs(){
-  // DONE: get 2 random images on the page
   let imageOneIndex = randomIndexGenerator();
   let imageTwoIndex = randomIndexGenerator();
   let imageThreeIndex = randomIndexGenerator();
 
-  // DONE: make sure they are unique
-  while(imageOneIndex === imageTwoIndex || imageOneIndex === imageThreeIndex || imageTwoIndex === imageThreeIndex){
-    
+  while (imageOneIndex === imageTwoIndex || imageOneIndex === imageThreeIndex || imageTwoIndex === imageThreeIndex){
     imageOneIndex = randomIndexGenerator();
     imageTwoIndex = randomIndexGenerator();
     imageThreeIndex = randomIndexGenerator();
@@ -59,45 +48,88 @@ function renderImgs(){
   imgThree.src = duckArray[imageThreeIndex].image;
   imgThree.title = duckArray[imageThreeIndex].name;
 
-  // DONE: Increase the goats views
   duckArray[imageOneIndex].views++;
   duckArray[imageTwoIndex].views++;
   duckArray[imageThreeIndex].views++;
 }
 
-// **** EVENT HANDLERS ****
+function collectVoteData(){
+  voteData.length = 0;
+  for (let i = 0; i < duckArray.length; i++) {
+    voteData.push({
+      name: duckArray[i].name,
+      votes: duckArray[i].votes,
+      views: duckArray[i].views
+    });
+  }
+}
+
+function displayChart(){
+  // Create labels and data arrays
+  const labels = voteData.map(item => item.name);
+  const votesData = voteData.map(item => item.votes);
+  const viewsData = voteData.map(item => item.views);
+
+  // Create chart canvas element
+  const chartCanvas = document.createElement('canvas');
+  chartCanvas.id = 'chart';
+  chartContainer.appendChild(chartCanvas);
+
+  // Create the chart
+  new Chart(chartCanvas, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Votes',
+          data: votesData,
+          backgroundColor: 'rgba(75, 192, 192, 0.5)',
+          borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        },
+        {
+          label: 'Views',
+          data: viewsData,
+          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }
+      ]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
 function handleImgClick(event){
-  // DONE: Identify the image that was clicked
-
   let imageClicked = event.target.title;
-  // console.dir(event.target);
-  // console.log(imageClicked);
 
-  // TODO: Increase the vote on that image
   for(let i = 0; i < duckArray.length; i++){
     if(imageClicked === duckArray[i].name){
       duckArray[i].votes++;
-      // TODO: decrement the voting round
       votingRounds--;
-      // TODO: generate new images
       renderImgs();
     }
   }
 
-  // TODO: once voting are done, we want to remove the ability to click
   if(votingRounds === 0){
     imgContainer.removeEventListener('click', handleImgClick);
+    collectVoteData();
+    displayChart();
   }
-
 }
 
 function handleShowResults(){
   if(votingRounds === 0){
     for(let i = 0; i < duckArray.length; i++){
       let duckListItem = document.createElement('li');
-
       duckListItem.textContent = `${duckArray[i].name} - Votes: ${duckArray[i].votes} & Views: ${duckArray[i].views}`;
-
       resultsList.appendChild(duckListItem);
     }
     resultBtn.removeEventListener('click', handleShowResults);
@@ -126,7 +158,6 @@ let waterCan = new Duck('water-can');
 let wineGlass= new Duck('wine-glass');
 
 duckArray.push(sweep, bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, tauntaun, unicorn, waterCan, wineGlass);
-
 
 renderImgs();
 
