@@ -120,8 +120,13 @@ function handleImgClick(event){
 
   if(votingRounds === 0){
     imgContainer.removeEventListener('click', handleImgClick);
+
+    let stringifedDucks = JSON.stringify(duckArray);
     collectVoteData();
     displayChart();
+    console.log('Stringifed Ducks', stringifedDucks);
+
+    localStorage.setItem('myDucks', stringifedDucks);
   }
 }
 
@@ -137,6 +142,18 @@ function handleShowResults(){
 }
 
 // **** EXECUTABLE CODE *****
+
+let retrievedDucks = localStorage.getItem('myDucks')
+
+console.log('Ducks from local sotrage >>>', retrievedDucks);
+
+let parsedDucks = JSON.parse(retrievedDucks);
+console.log('parsed items  >>>', parsedDucks);
+
+if(retrievedDucks){
+  duckArray = parsedDucks; 
+
+} else { 
 let sweep = new Duck('sweep', 'png');
 let bag = new Duck('bag');
 let banana = new Duck('banana');
@@ -159,7 +176,11 @@ let wineGlass= new Duck('wine-glass');
 
 duckArray.push(sweep, bag, banana, bathroom, boots, breakfast, bubblegum, chair, cthulhu, dogDuck, dragon, pen, petSweep, scissors, shark, tauntaun, unicorn, waterCan, wineGlass);
 
+}
+
 renderImgs();
 
 imgContainer.addEventListener('click', handleImgClick);
 resultBtn.addEventListener('click', handleShowResults);
+
+
